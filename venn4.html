@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Generate a 4 part Venn diagram</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+<div style="float:left;padding:20px">
+  <input class="venn_label" id="vennA" type="text" value="A">
+  <br>
+  <input class="venn_label" id="vennB" type="text" value="B">
+  <br>
+  <input class="venn_label" id="vennC" type="text" value="C">
+  <br>
+  <input class="venn_label" id="vennD" type="text" value="D">
+  <br>
+</div>
+<div style="float:left;padding:20px">
+    <table>
+    <tr>
+      <td>|A|</td>
+      <td>
+        <input class="input-mini venn_area" id="A" type="number" value="16">
+      </td>
+    </tr>
+    <tr>
+      <td>|B|</td>
+      <td>
+        <input class="input-mini venn_area" id="B" type="number" value="16">
+      </td>
+    </tr>
+    <tr>
+      <td>|C|</td>
+      <td>
+        <input class="input-mini venn_area" id="C" type="number" value="12">
+      </td>
+    </tr>
+    <tr>
+      <td>|D|</td>
+      <td>
+        <input class="input-mini venn_area" id="D" type="number" value="12">
+      </td>
+    </tr>
+    <tr>
+      <td>|A&#8745B|</td>
+      <td>
+        <input class="input-mini venn_area" id="A,B" type="number" value="4">
+      </td>
+    </tr>
+    <tr>
+      <td>|A&#8745C|</td>
+      <td>
+        <input class="input-mini venn_area" id="A,C" type="number" value="4">
+      </td>
+    </tr>
+    <tr>
+      <td>|A&#8745D|</td>
+      <td>
+        <input class="input-mini venn_area" id="A,D" type="number" value="4">
+      </td>
+    </tr>
+    <tr>
+      <td>|B&#8745C|</td>
+      <td>
+        <input class="input-mini venn_area" id="B,C" type="number" value="3">
+      </td>
+    </tr>
+    <tr>
+      <td>|B&#8745D|</td>
+      <td>
+        <input class="input-mini venn_area" id="B,D" type="number" value="3">
+      </td>
+    </tr>
+    <tr>
+      <td>|C&#8745D|</td>
+      <td>
+        <input class="input-mini venn_area" id="C,D" type="number" value="3">
+      </td>
+    </tr>
+    <tr>
+      <td>|A&#8745B&#8745C|&nbsp</td>
+      <td>
+        <input class="input-mini venn_area" id="A,B,C" type="number" value="2">
+      </td>
+    </tr>
+    <tr>
+      <td>|A&#8745B&#8745D|&nbsp</td>
+      <td>
+        <input class="input-mini venn_area" id="A,B,D" type="number" value="2">
+      </td>
+    </tr>
+    <tr>
+      <td>|A&#8745C&#8745D|&nbsp</td>
+      <td>
+        <input class="input-mini venn_area" id="A,C,D" type="number" value="2">
+      </td>
+    </tr>
+    <tr>
+      <td>|B&#8745C&#8745D|&nbsp</td>
+      <td>
+        <input class="input-mini venn_area" id="B,C,D" type="number" value="2">
+      </td>
+    </tr>
+    <tr>
+      <td>|A&#8745B&#8745C&#8745D|&nbsp</td>
+      <td>
+        <input class="input-mini venn_area" id="A,B,C,D" type="number" value="2">
+      </td>
+    </tr>
+    </table>
+</div>
+<div id="venn"></div>
+<div style="clear: both;"></div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="/venn.js"></script>
+<script>
+function getSetIntersections() {
+    areas = d3.selectAll(".venn_area")[0].map(
+        function (element) {
+            return { sets:
+              element.id.split(",").map(
+                function (duament) {
+                  console.log(vennLabels[duament]);
+                  return vennLabels[duament];
+                }
+              )
+              //
+              ,
+                     size: parseFloat(element.value)};} );
+    return areas;
+}
+
+// initialise the venn labels
+var vennLabels = {
+    A: "A",
+    B: "B",
+    C: "C",
+    D: "D"
+  };
+
+// draw the initial set
+var chart = venn.VennDiagram()
+                 .width(600)
+                 .height(500);
+
+d3.select("#venn").datum(getSetIntersections()).call(chart);
+
+// redraw the sets on any change in input
+d3.selectAll("input").on("change", function() {
+    vennLabels["A"] = document.getElementById("vennA").value;
+    console.log(vennLabels["A"]);
+    console.log(document.getElementById("vennA").value);
+    vennLabels["B"] = document.getElementById("vennB").value;
+    vennLabels["C"] = document.getElementById("vennC").value;
+    vennLabels["D"] = document.getElementById("vennD").value;
+    d3.select("#venn").datum(getSetIntersections()).call(chart);
+    var colours = ['black', 'red', 'blue', 'green', 'orange'];
+    d3.selectAll("#venn .venn-circle path")
+        .style("fill-opacity", 0)
+        .style("stroke-width", 10)
+        .style("stroke-opacity", .5)
+        .style("stroke", function(d,i) { return colours[i]; });
+
+    d3.selectAll("#venn .venn-circle text")
+        .style("fill", function(d,i) { return colours[i]})
+        .style("font-size", "32px")
+        .style("font-weight", "100");
+});
+
+// tweak style
+var colours = ['black', 'red', 'blue', 'green'];
+d3.selectAll("#venn .venn-circle path")
+    .style("fill-opacity", 0)
+    .style("stroke-width", 10)
+    .style("stroke-opacity", .5)
+    .style("stroke", function(d,i) { return colours[i]; });
+
+d3.selectAll("#venn .venn-circle text")
+    .style("fill", function(d,i) { return colours[i]})
+    .style("font-size", "32px")
+    .style("font-weight", "100");
+
+</script>
+</html>

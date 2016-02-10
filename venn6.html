@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Generate a 6 part Venn diagram</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="float:left;padding:20px">
+    <input class='venn_label' id='vennA' type='text' value='A'>
+    <br>
+    <input class='venn_label' id='vennB' type='text' value='B'>
+    <br>
+    <input class='venn_label' id='vennC' type='text' value='C'>
+    <br>
+    <input class='venn_label' id='vennD' type='text' value='D'>
+    <br>
+    <input class='venn_label' id='vennE' type='text' value='E'>
+    <br>
+    <input class='venn_label' id='vennF' type='text' value='F'>
+    <br>
+  </div>
+  <div style="float:left;padding:20px">
+    <table>
+      <tr>
+        <td>|A|</td>
+        <td>
+          <input class='input-mini venn_area' id='A' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|B|</td>
+        <td>
+          <input class='input-mini venn_area' id='B' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|C|</td>
+        <td>
+          <input class='input-mini venn_area' id='C' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|D|</td>
+        <td>
+          <input class='input-mini venn_area' id='D' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|E|</td>
+        <td>
+          <input class='input-mini venn_area' id='E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|F|</td>
+        <td>
+          <input class='input-mini venn_area' id='F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|AB|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|AC|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,C' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|AD|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,D' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|AE|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|AF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BC|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,C' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BD|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,D' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BE|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BF|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|CD|</td>
+        <td>
+          <input class='input-mini venn_area' id='C,D' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|CE|</td>
+        <td>
+          <input class='input-mini venn_area' id='C,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|CF|</td>
+        <td>
+          <input class='input-mini venn_area' id='C,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|DE|</td>
+        <td>
+          <input class='input-mini venn_area' id='D,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|DF|</td>
+        <td>
+          <input class='input-mini venn_area' id='D,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|EF|</td>
+        <td>
+          <input class='input-mini venn_area' id='E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABC|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,C' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABD|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,D' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABE|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ACD|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,C,D' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ACE|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,C,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ACF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,C,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ADE|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,D,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ADF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,D,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|AEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BCD|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,C,D' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BCE|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,C,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BCF|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,C,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BDE|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,D,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BDF|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,D,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|CDE|</td>
+        <td>
+          <input class='input-mini venn_area' id='C,D,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|CDF|</td>
+        <td>
+          <input class='input-mini venn_area' id='C,D,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|CEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='C,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|DEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='D,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABCD|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,C,D' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABCE|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,C,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABCF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,C,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABDE|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,D,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABDF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,D,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ACDE|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,C,D,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ACDF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,C,D,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ACEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,C,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ADEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,D,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BCDE|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,C,D,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BCDF|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,C,D,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BCEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,C,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BDEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,D,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|CDEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='C,D,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABCDE|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,C,D,E' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABCDF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,C,D,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABCEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,C,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABDEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,D,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ACDEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,C,D,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|BCDEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='B,C,D,E,F' type='number' value='30'>
+        </td>
+      </tr>
+      <tr>
+        <td>|ABCDEF|</td>
+        <td>
+          <input class='input-mini venn_area' id='A,B,C,D,E,F' type='number' value='30'>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="venn"></div>
+  <div style="clear: both;"></div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="/venn.js"></script>
+<script>
+  function getSetIntersections() {
+    areas = d3.selectAll(".venn_area")[0].map(
+      function(element) {
+        console.log(element);
+        return {
+          sets: element.id.split(",").map(
+              function(duament) {
+                // console.log(vennLabels[duament]);
+                return vennLabels[duament];
+              }
+            )
+            //
+            ,
+          size: parseFloat(element.value)
+        };
+      });
+    console.log(areas);
+    return areas;
+  }
+
+  // initialise the venn labels
+  var vennLabels = {
+    A: "A",
+    B: "B",
+    C: "C",
+    D: "D",
+    E: "E",
+    F: "F"
+  };
+
+  // draw the initial set
+  var chart = venn.VennDiagram()
+    .width(600)
+    .height(500);
+
+  var sets = [{
+    sets: ['A'],
+    size: 12
+  }, {
+    sets: ['B'],
+    size: 12
+  }, {
+    sets: ['C'],
+    size: 12
+  }, {
+    sets: ['D'],
+    size: 12
+  }, {
+    sets: ['E'],
+    size: 12
+  }, {
+    sets: ['F'],
+    size: 12
+  }, {
+    sets: ['A', 'B'],
+    size: 6
+  }, {
+    sets: ['A', 'C'],
+    size: 6
+  }, {
+    sets: ['A', 'D'],
+    size: 6
+  }, {
+    sets: ['A', 'E'],
+    size: 6
+  }, {
+    sets: ['A', 'F'],
+    size: 6
+  }, {
+    sets: ['B', 'C'],
+    size: 0
+  }, {
+    sets: ['B', 'D'],
+    size: 0
+  }, {
+    sets: ['B', 'E'],
+    size: 0
+  }, {
+    sets: ['B', 'F'],
+    size: 6
+  }, {
+    sets: ['C', 'D'],
+    size: 0
+  }, {
+    sets: ['C', 'E'],
+    size: 3
+  }, {
+    sets: ['C', 'F'],
+    size: 2
+  }, {
+    sets: ['D', 'E'],
+    size: 13
+  }, {
+    sets: ['D', 'F'],
+    size: 6
+  }, {
+    sets: ['E', 'F'],
+    size: 6
+  // }, {
+  //   sets: ['A', 'B', 'C'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'D'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'C', 'D'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'C', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'C', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'D', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'D', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'C', 'D'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'C', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'C', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'D', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'D', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['C', 'D', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['C', 'D', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['C', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['D', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'C', 'D'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'C', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'C', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'D', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'D', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'C', 'D', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'C', 'D', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'C', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'D', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'C', 'D', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'C', 'D', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'C', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'D', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['C', 'D', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'C', 'D', 'E'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'C', 'D', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'C', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'D', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'C', 'D', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['B', 'C', 'D', 'E', 'F'],
+  //   size: 12
+  // }, {
+  //   sets: ['A', 'B', 'C', 'D', 'E', 'F'],
+  //   size: 12
+  }];
+
+  // d3.select("#venn").datum(getSetIntersections()).call(chart);
+  d3.select("#venn").datum(sets).call(chart);
+
+  // redraw the sets on any change in input
+  d3.selectAll("input").on("change", function() {
+    vennLabels['A'] = document.getElementById('vennA').value;
+    vennLabels['B'] = document.getElementById('vennB').value;
+    vennLabels['C'] = document.getElementById('vennC').value;
+    vennLabels['D'] = document.getElementById('vennD').value;
+    vennLabels['E'] = document.getElementById('vennE').value;
+    vennLabels['F'] = document.getElementById('vennF').value;
+
+    d3.select("#venn").datum(getSetIntersections()).call(chart);
+    var colours = ['black', 'red', 'blue', 'green', 'orange', 'pink', 'yellow'];
+    d3.selectAll("#venn .venn-circle path")
+      .style("fill-opacity", 0)
+      .style("stroke-width", 10)
+      .style("stroke-opacity", .5)
+      .style("stroke", function(d, i) {
+        return colours[i];
+      });
+
+    d3.selectAll("#venn .venn-circle text")
+      .style("fill", function(d, i) {
+        return colours[i]
+      })
+      .style("font-size", "32px")
+      .style("font-weight", "100");
+  });
+
+  // tweak style
+  var colours = ['black', 'red', 'blue', 'green', 'orange', 'pink', 'yellow'];
+  d3.selectAll("#venn .venn-circle path")
+    .style("fill-opacity", 0)
+    .style("stroke-width", 10)
+    .style("stroke-opacity", .5)
+    .style("stroke", function(d, i) {
+      return colours[i];
+    });
+
+  d3.selectAll("#venn .venn-circle text")
+    .style("fill", function(d, i) {
+      return colours[i]
+    })
+    .style("font-size", "32px")
+    .style("font-weight", "100");
+</script>
+
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "pip_venn",
+  "version": "1.0.0",
+  "description": "create venn diagrams using vennjs and d3js",
+  "main": "index.js",
+  "dependencies": {
+    "d3": "^3.5.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielJohnston/pip_venn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielJohnston/pip_venn/issues"
+  },
+  "homepage": "https://github.com/DanielJohnston/pip_venn#readme"
+}
